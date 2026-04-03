@@ -2,6 +2,9 @@
 library(shiny)
 library(tidyverse)
 library(palmerpenguins)
+library(DT)
+
+## ids in inputs and outputs have to be unique!!
 
 # --- user interface ----
 ui <- fluidPage(
@@ -11,6 +14,8 @@ ui <- fluidPage(
   
   # app subtitle
   h2(strong("Exploring Antarctic Penguin Data")), # function that actually establishes user interface (sets basic webpage structure)
+  
+  h3("Body Mass Plot (Select Body Mass Range)"),
 
 # body mass slider input
   sliderInput(inputId = "body_mass_input", # this id is what goes into plots, etc.
@@ -20,13 +25,24 @@ ui <- fluidPage(
 # outputs in the UI create placeholders which are later filled by the server function
 
   # body mass plot output
-  plotOutput(outputId = "body_mass_scatterplot_output") # does not change in UI
+  plotOutput(outputId = "body_mass_scatterplot_output"), # does not change in UI
 
-# each output in the UI is paired with its own render function (in server)
+  h3("Data Frame (Filter by Year)"),
+
+# DT table year checkbox
+  checkboxGroupInput(inputId = "table_year_input",
+                     label = "Select year(s)",
+                     choices = c(2007, 2008, 2009), # unique(penguins$year) is the preferred way for reproducibility
+                     selected = c(2007, 2008)),
+
+  # DT table year output
+  DT::dataTableOutput(outputId = "table_year_output")
+
+## each output in the UI is paired with its own render function (in server)
 )
 
 # ---- server ----
-server <- function(input, output){
+server <- function(input, output){ # don't need commas in between each piece! no structure to server
   
   # filter body masses (need to create dataframe that then gets filtered into our plot)
   body_mass_df <- reactive({ # this function tells it that the df is reactive
@@ -56,7 +72,21 @@ server <- function(input, output){
     
   }
   )
+ 
+  # filter for specific years
+  filtered_year_df <- reactive({
+    
+    penguins %>% 
+      filter(year == input$table_year_input) # could also do filter(year %in% c(input$table_year_input))
+    
+  })
   
+  # code to create data table
+  
+  output$table_year_output <- DT::renderDataTable(
+    
+    DT::datatable(filtered_year_df()) # could also run without DT::datatable function!
+  )
   
 }
 

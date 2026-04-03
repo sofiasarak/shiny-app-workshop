@@ -20,3 +20,13 @@ ggplot(na.omit(body_mass_df),
   theme_minimal() +
   theme(legend.position.inside = c(0.85, 0.2), 
         legend.background = element_rect(color = "white"))
+
+# ---- create DT table ----
+library(DT)
+
+# filter data frame for specific years
+year_filtered <- penguins %>% 
+  filter(year == c(2007, 2008)) 
+
+# use filtered data in DT table
+DT::datatable(year_filtered)
