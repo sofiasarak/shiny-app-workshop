@@ -8,6 +8,7 @@ library(tidyverse)
 library(shinyWidgets)
 library(palmerpenguins)
 library(markdown)
+library(shinycssloaders)
 
 # data wrangling 
 

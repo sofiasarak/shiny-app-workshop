@@ -66,7 +66,11 @@ ui <- navbarPage( # similar to fluidpage but adds a navbar at the top
                  # trout mainPanel ----
                  mainPanel(
                    
-                   plotOutput(outputId = "trout_scatterplot_output")
+                   plotOutput(outputId = "trout_scatterplot_output") %>% 
+                     
+                     withSpinner(color = "cornflowerblue", # there's a demo app that shows you all of these options!
+                                 type = 4, # (adds spinner to show that data is loading)
+                                 size = 2)
                    
                  ) # END trouth mainPanel
                  
@@ -106,7 +110,10 @@ ui <- navbarPage( # similar to fluidpage but adds a navbar at the top
                  # penguins mainPanel ----
                  mainPanel(
                    
-                   plotOutput(outputId = "penguin_flipper_length_plot")
+                   plotOutput(outputId = "penguin_flipper_length_plot") %>% 
+                     withSpinner(color = "cornflowerblue", # there's a demo app that shows you all of these options!
+                                 type = 4,
+                                 size = 2)
                    
                  ) # END penguin mainPanel
                  

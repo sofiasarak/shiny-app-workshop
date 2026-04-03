@@ -8,6 +8,16 @@ server <- function(input, output){
   # filtered trout data ----
   trout_filtered_df <- reactive({ 
     
+# validations to ensure that variables are selected/explain to user why plot is blank
+    
+    validate( # validation for user ease
+      need(length(input$channel_type_input) > 0, # need length of user selection to be greater than 0
+           "Please select at least one channel type to visualize data for."), # if condition is not met, the message is displayed
+      
+      need(length(input$section_input) > 0, 
+           "Please select at least one section (clear cut forest or old growth forest) to visualize data for.")
+    )
+    
     clean_trout |> 
       filter(channel_type %in% c(input$channel_type_input)) %>% 
       filter(section %in% c(input$section_input))
@@ -39,12 +49,21 @@ server <- function(input, output){
            shape = "Channel Type") +
       myCustomTheme()
     
-  })
+  },
+  
+# adding alt text! 
+ alt = "This is my trout plot alt text." 
+  )
     
 # filter penguin data 
 
 island_df <- reactive({   
    
+# validations
+  validate(
+    need(length(input$penguin_island_input) > 0,
+         "Please select at least one island to visualize data for."))
+  
   penguins |> 
       filter(island %in% c(input$penguin_island_input))
 })
@@ -58,6 +77,11 @@ island_df <- reactive({
         labs(x = "Flipper length (mm)", y = "Frequency",
              fill = "Penguin species") +
         myCustomTheme()
-    })
+    },
+
+# adding alt text!
+
+alt = "This is my penguin plot alt text."
+    )
     
 }
