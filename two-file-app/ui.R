@@ -1,6 +1,10 @@
 # ---- user interface ---- anything that I want to end up on the website needs to live in ui
 ui <- navbarPage( # similar to fluidpage but adds a navbar at the top
   
+  # theme 
+  theme = "app-fresh-theme.css", # don't need to define file path because shiny recognizes www folder
+  
+  
   # title
   title = "LTER Animal Data Explorer",
   

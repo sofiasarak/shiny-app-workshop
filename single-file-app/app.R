@@ -3,11 +3,19 @@ library(shiny)
 library(tidyverse)
 library(palmerpenguins)
 library(DT)
+library(bslib)
 
 ## ids in inputs and outputs have to be unique!!
 
 # --- user interface ----
 ui <- fluidPage(
+  
+  theme = bs_theme(  # bootswatch = assigns a pre-built theme
+    bg = "lightpink",
+    fg = "blue",
+    primary = "orange",
+    base_font = font_google("Pacifico")
+  ),
   
   # app title
   tags$h1("My App Title"), # various tags that correspond to different html elements

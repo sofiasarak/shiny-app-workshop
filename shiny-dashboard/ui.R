@@ -24,7 +24,9 @@ sidebar <-  dashboardSidebar(
 ) # END dashboardSidebar
 
 # ---- dashboard body ----
-body <- dashboardBody(
+body <- dashboardBody( # theme always goes into body of the dashboard!
+  
+  use_theme("dashboard-fresh-theme.css"),
   
   tabItems(
     
